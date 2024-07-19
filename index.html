@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- metadata -->
+  <title>Reflict</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0" />
+  <meta name="description"
+    content="Miniblox is an online multiplayer voxel game that offers a variety of features, including competitive minigames, a wide selection of blocks to build with, challenging parkour levels, and much more!" />
+  <meta name="theme-color" content="#6045a0" />
+  <meta name="keywords" content="Blocks, Voxel, Building, Parkour, PVP, Videogame, Free Minecraft, Minecraft, BlockCraft, Miniblox, Minecraft Clone, Minecraft Download, Online Minecraft, Cracked Minecraft, Minecraft Free" />
+  <meta name="author" content="Victor Wei, qhyun" />
+
+  <meta name="theme-color" content="#6045a0" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
+  <!-- open graph metadata -->
+  <meta property="og:title" content="Miniblox" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://miniblox.io" />
+  <meta property="og:image" content="/images/title.png" />
+  <meta property="og:description"
+    content="Miniblox is an online multiplayer voxel game that offers a variety of features, including competitive minigames, a wide selection of blocks to build with, challenging parkour levels, and much more!" />
+
+  <!-- progressive web app manifest-->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- prevent caching of index.html -->
+  <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- origin trial to allow 3rd party COEP (google adsense) -->
+
+  <!-- blockcraft.online -->
+  <meta http-equiv="origin-trial"
+    content="AnRMllVzoH2qsqEdSP65OheYIgY0DPfzB5EEoF5b6ePIrR1pZBCpXA7bvet4aJ6g0AOVzC/0dG3M89L2vys77wgAAAB7eyJvcmlnaW4iOiJodHRwczovL2Jsb2NrY3JhZnQub25saW5lOjQ0MyIsImZlYXR1cmUiOiJVbnJlc3RyaWN0ZWRTaGFyZWRBcnJheUJ1ZmZlciIsImV4cGlyeSI6MTcwOTg1NTk5OSwiaXNTdWJkb21haW4iOnRydWV9">
+  <!-- miniblox.io -->
+  <meta http-equiv="origin-trial"
+    content="AmcE2azmp8yWWvb93jCAPRYsRvcGWTQcC6pPV2A1lH5w3ysx9ROdgnKI4Qqijr3TIvW1xf5FayK+MveiWvOwOg4AAAB1eyJvcmlnaW4iOiJodHRwczovL21pbmlibG94LmlvOjQ0MyIsImZlYXR1cmUiOiJVbnJlc3RyaWN0ZWRTaGFyZWRBcnJheUJ1ZmZlciIsImV4cGlyeSI6MTcwOTg1NTk5OSwiaXNTdWJkb21haW4iOnRydWV9">
+  <!-- localhost -->
+  <meta http-equiv="origin-trial"
+    content="Au+juWOaAdAajys/qv0hxwg9f/HOKn2ZcnYN3dxnAxxjXZm4PsVR3rWZGLBh1o25sxu8RimLSFz5rlrsDA6waQ4AAABgeyJvcmlnaW4iOiJodHRwOi8vbG9jYWxob3N0OjMwMDEiLCJmZWF0dXJlIjoiVW5yZXN0cmljdGVkU2hhcmVkQXJyYXlCdWZmZXIiLCJleHBpcnkiOjE3MDk4NTU5OTl9">
+
+  <link rel="preconnect" href="https://www.google.com">
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet" crossorigin="anonymous" />
+
+  <!-- AdinPlay Ads -->
+  <script>
+    window.aiptag = window.aiptag || {};
+    aiptag.cmd = aiptag.cmd || [];
+    aiptag.cmd.display = aiptag.cmd.display || [];
+    aiptag.cmd.player = aiptag.cmd.player || [];
+
+    //CMP tool settings
+    aiptag.cmp = {
+      show: true,
+      position: "centered",  //centered or bottom
+      button: true,
+      buttonText: "Privacy settings",
+      buttonPosition: "bottom-right" //bottom-left, bottom-right, top-left, top-right
+    }
+
+    // disable adinplay console banner by temporarily unbinding console.log
+    window.tempConsoleLog = window.console.log;
+    window.console.log = function () { };
+  </script>
+  <script src="//api.adinplay.com/libs/aiptag/pub/BLC/blockcraft.online/tag.min.js"></script>
+  <script>
+    window.console.log = window.tempConsoleLog;
+  </script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJ760XE436"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HJ760XE436');
+  </script>
+
+  <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+  <script type="module" crossorigin src="/assets/index-9db32016.js"></script>
+  <link rel="stylesheet" href="/assets/index-19dc5558.css">
+</head>
+
+<body>
+
+  <div style="position:absolute; right: 0" id="preroll"></div>
+
+  <!-- Load video ad player -->
+  <script>
+    // video-ad-skipped
+    window.aiptag.cmd.player.push(function () {
+      window.aiptag.adplayer = new aipPlayer({
+        AD_WIDTH: 240, // default: 960
+        AD_HEIGHT: 135, // default: 540
+        AD_FULLSCREEN: false,
+        AD_CENTERPLAYER: false,
+        LOADING_TEXT: 'loading advertisement',
+        PREROLL_ELEM: function () { return document.getElementById('preroll') },
+        AIP_COMPLETE: function (evt) {
+          /*******************
+           ***** WARNING *****
+           *******************
+           Please do not remove the PREROLL_ELEM
+           from the page, it will be hidden automaticly.
+           If you do want to remove it use the AIP_REMOVE callback.
+          */
+          console.error("Preroll Ad Completed: " + evt);
+        },
+        AIP_REMOVE: function () {
+        }
+      });
+    });
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3693486377553906"
+    crossorigin="anonymous"></script>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="background-image" style="image-rendering: pixelated"></div>
+
+    <div id="loading-screen-container">
+      <div id="loading-screen-text">
+        Miniblox Modded
+      </div>
+      <div id="progress-bar">
+        <div id="progress-bar-inner"></div>
+      </div>
+      <div id="progress-text">
+        Loading game...
+      </div>
+    </div>
+  </div>
+
+  <!-- Game -->
+  
+  <div id="react" style="position: absolute;width: 100%;height: 100%;z-index: 4"></div>
+  <canvas id="canvas-hud"></canvas>
+  <div id="canvas-holder"></div>
+</body>
+
+</html>
