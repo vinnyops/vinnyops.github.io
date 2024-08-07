@@ -926,7 +926,7 @@ function modifyCode(text) {
 			antiban.toggle();
 			new Module("AutoRejoin", function() {});
 			const chatdisabler = new Module("ChatDisabler", function() {});
-			chatdisablermsg = chatdisabler.addoption("Message", String, "cattsforlife");
+			chatdisablermsg = chatdisabler.addoption("Message", String, "You been hacked by cattsforlife. HOSHINO ON TOP");
 
 			const survival = new Module("SurvivalMode", function(callback) {
 				if(callback)
