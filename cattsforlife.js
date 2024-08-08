@@ -959,7 +959,7 @@ function modifyCode(text) {
 			antiban.toggle();
 			new Module("AutoRejoin", function() {});
 			const chatdisabler = new Module("ChatDisabler", function() {});
-			chatdisablermsg = chatdisabler.addoption("Message", String, "youtube.com/c/7GrandDadVape");
+			chatdisablermsg = chatdisabler.addoption("Message", String, "Cattsforlife had hacked you");
 			new Module("FilterBypass", function() {});
 
 			const survival = new Module("SurvivalMode", function(callback) {
