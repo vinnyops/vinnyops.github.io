@@ -53,7 +53,7 @@ function modifyCode(text) {
 	addReplacement('ShaderManager.addShaderToMaterialWorld(this.materialTransparentWorld)}', `
 		async loadVape() {
 			this.vapeTexture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logo.png");
-			this.v4Texture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logov4.png");
+			this.v4Texture = await this.loader.loadAsync("");
 		}
 	`);
 
@@ -926,7 +926,7 @@ function modifyCode(text) {
 			antiban.toggle();
 			new Module("AutoRejoin", function() {});
 			const chatdisabler = new Module("ChatDisabler", function() {});
-			chatdisablermsg = chatdisabler.addoption("Message", String, "You been hacked by cattsforlife. HOSHINO ON TOP");
+			chatdisablermsg = chatdisabler.addoption("Message", String, "You been hacked by cattsforlife");
 
 			const survival = new Module("SurvivalMode", function(callback) {
 				if(callback)
