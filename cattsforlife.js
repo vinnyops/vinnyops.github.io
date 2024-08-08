@@ -35,14 +35,33 @@ function modifyCode(text) {
 		let enabledModules = {};
 		let modules = {};
 
+		let keybindCallbacks = {};
+		let keybindList = {};
+
 		let tickLoop = {};
 		let renderTickLoop = {};
 
 		let lastJoined, velocityhori, velocityvert, chatdisablermsg, attackedEntity;
 		let attackTime = Date.now();
 		let chatDelay = Date.now();
-		console.log("payload loaded!");
+
+		function getModule(str) {
+			for(const [name, module] of Object.entries(modules))
+			{
+				if(name.toLocaleLowerCase() == str.toLocaleLowerCase()) return module;
+			}
+		}
+
+		let j;
+		for (j = 0; j < 26; j++) keybindList[j + 65] = keybindList["Key" + String.fromCharCode(j + 65)] = String.fromCharCode(j + 97);
+		for (j = 0; j < 10; j++) keybindList[48 + j] = keybindList["Digit" + j] = "" + j;
+		window.addEventListener("keydown", function(key) {
+			const func = keybindCallbacks[keybindList[key.code]];
+			call$1(func, key);
+		});
 	`);
+
+	addReplacement('VERSION$1," | ",', '"Vape V4 v1.0.0"," | ",');
 
 	// DRAWING SETUP
 	addReplacement('ut(this,"glintTexture");', `
@@ -53,7 +72,7 @@ function modifyCode(text) {
 	addReplacement('ShaderManager.addShaderToMaterialWorld(this.materialTransparentWorld)}', `
 		async loadVape() {
 			this.vapeTexture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logo.png");
-			this.v4Texture = await this.loader.loadAsync("");
+			this.v4Texture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logov4.png");
 		}
 	`);
 
@@ -202,7 +221,7 @@ function modifyCode(text) {
 	addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["FastBreak"]`);
 
 	// INVWALK
-	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"])', true);
+	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
 
 	// AUTORESPAWN
 	addReplacement('showDeathScreen=!0,exitPointerLock())', `
@@ -316,23 +335,26 @@ function modifyCode(text) {
 
 	// COMMANDS
 	addReplacement('tryExecuteClientside(et,_))return;', `
-		if($.startsWith(".bind"))
+		const str = $.toLocaleLowerCase();
+		if(str.startsWith(".bind"))
 		{
-			const args = $.split(" ");
-			if(args.length > 2 && modules[args[1]]) modules[args[1]].setbind(args[2], true);
+			const args = str.split(" ");
+			const module = args.length > 2 && getModule(args[1]);
+			if(module) module.setbind(args[2], true);
 			return;
 		}
-		else if ($.startsWith(".toggle"))
+		else if (str.startsWith(".toggle") || str.startsWith(".t"))
 		{
-			const args = $.split(" ");
+			const args = str.split(" ");
 			if(args.length > 1)
 			{
-				if(modules[args[1]])
+				const module = args.length > 1 && getModule(args[1]);
+				if(module)
 				{
-					modules[args[1]].toggle();
+					module.toggle();
 					game$1.chat.addChat({
-						text: args[1] + (modules[args[1]].enabled ? " Enabled!" : " Disabled!"),
-						color: modules[args[1]].enabled ? "lime" : "red"
+						text: module.name + (module.enabled ? " Enabled!" : " Disabled!"),
+						color: module.enabled ? "lime" : "red"
 					});
 				}
 				else if(args[1] == "all")
@@ -342,40 +364,43 @@ function modifyCode(text) {
 			}
 			return;
 		}
-		else if ($.startsWith(".modules"))
+		else if (str.startsWith(".modules"))
 		{
-			let str = "Module List";
+			let str = "Module List\\n";
 			for(const [name, module] of Object.entries(modules)) str += "\\n" + name;
 			game$1.chat.addChat({text: str});
 			return;
 		}
-		else if ($.startsWith(".setoption"))
+		else if (str.startsWith(".setoption"))
 		{
-			const args = $.split(" ");
-			if(args.length > 1 && modules[args[1]])
+			const args = str.split(" ");
+			const module = args.length > 1 && getModule(args[1]);
+			if(module)
 			{
 				if(args.length < 3)
 				{
 					let str = args[1] + " Options";
-					for(const [name, value] of Object.entries(modules[args[1]].options))
-					{
-						str += "\\n" + name + " : " + value[0].name + " : " + value[1];
-					}
+					for(const [name, value] of Object.entries(module.options)) str += "\\n" + name + " : " + value[0].name + " : " + value[1];
 					game$1.chat.addChat({text: str});
 					return;
 				}
-				const option = modules[args[1]] && modules[args[1]].options[args[2]];
+
+				let option;
+				for(const [name, value] of Object.entries(module.options))
+				{
+					if(name.toLocaleLowerCase() == args[2].toLocaleLowerCase()) option = value;
+				}
 				if(!option) return;
 				if(option[0] == Number) option[1] = !isNaN(Number.parseFloat(args[3])) ? Number.parseFloat(args[3]) : option[1];
 				else if(option[0] == Boolean) option[1] = args[3] == "true";
 				else if(option[0] == String) option[1] = args.slice(3).join(" ");
-				game$1.chat.addChat({text: "Set " + args[1] + " " + args[2] + " to " + option[1]});
+				game$1.chat.addChat({text: "Set " + module.name + " " + option.name + " to " + option[1]});
 			}
 			return;
 		}
-		else if ($.startsWith(".profile") || $.startsWith(".config"))
+		else if (str.startsWith(".profile") || str.startsWith(".config"))
 		{
-			const args = $.split(" ");
+			const args = str.split(" ");
 			if(args.length > 1)
 			{
 				if(args[1] == "save")
@@ -391,6 +416,14 @@ function modifyCode(text) {
 				}
 			}
 			return;
+		}
+
+		if(enabledModules["FilterBypass"])
+		{
+			const words = $.split(" ");
+			let newwords = [];
+			for(const word of words) newwords.push(word.charAt(0) + '‎' + word.slice(1));
+			$ = newwords.join(' ');
 		}
 	`)
 
@@ -413,12 +446,12 @@ function modifyCode(text) {
 					this.func(this.enabled);
 				}
 				setbind(key, manual) {
-					if(this.bind != "") keyupCallbacks[this.bind] = undefined;
+					if(this.bind != "") keybindCallbacks[this.bind] = undefined;
 					this.bind = key;
 					if(key == "") return;
 					if(manual) game$1.chat.addChat({text: "Bound " + this.name + " to " + key + "!"});
 					const module = this;
-					keyupCallbacks[this.bind] = function(j) {
+					keybindCallbacks[this.bind] = function(j) {
 						if(Game.isActive())
 						{
 							module.toggle();
@@ -926,7 +959,8 @@ function modifyCode(text) {
 			antiban.toggle();
 			new Module("AutoRejoin", function() {});
 			const chatdisabler = new Module("ChatDisabler", function() {});
-			chatdisablermsg = chatdisabler.addoption("Message", String, "You been hacked by cattsforlife");
+			chatdisablermsg = chatdisabler.addoption("Message", String, "youtube.com/c/7GrandDadVape");
+			new Module("FilterBypass", function() {});
 
 			const survival = new Module("SurvivalMode", function(callback) {
 				if(callback)
