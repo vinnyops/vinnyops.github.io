@@ -349,8 +349,8 @@ function modifyCode(text) {
 			$.cosmetics.cape = "GrandDad";
 		}
 	`);
-	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
-	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
+	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"Ashley",name:"Ashley",tier:2,skinny:!1},');
+	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"Ashley",name:"Ashley",tier:2},');
 	addReplacement('async downloadSkin(_){', `
 		if (_ == "GrandDad") {
 			const $ = skins[_];
@@ -373,7 +373,7 @@ function modifyCode(text) {
 		if (_ == "GrandDad") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/cape.png", rt => {
+				textureManager.loader.load("", rt => {
 					const nt = {
 						atlas: rt,
 						id: _,
