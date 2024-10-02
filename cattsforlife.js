@@ -112,7 +112,7 @@ function modifyCode(text) {
 		});
 	`);
 
-	addReplacement('VERSION$1," | ",', `"Yumea Me Beta 8"," | ",`);
+	addReplacement('VERSION$1," | ",', `"${vapeName} v1.0.5"," | ",`);
 	addReplacement('if(!nt.canConnect){', 'nt.errorMessage = nt.errorMessage == "Could not join server. You are connected to a VPN or proxy. Please disconnect from it and refresh the page." ? "You got ip banned :(, but don't worry. Just change your computer ip address." : nt.errorMessage;');
 
 	// DRAWING SETUP
@@ -278,7 +278,7 @@ function modifyCode(text) {
 	`);
 
 	// FASTBREAK
-	addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["FastBreak"]`);
+	addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["Breakfast"]`);
 	// INVWALK
 	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
 
@@ -688,7 +688,7 @@ function modifyCode(text) {
 			killaurawall = killaura.addoption("Wallcheck", Boolean, false);
 			killaurabox = killaura.addoption("Box", Boolean, true);
 			killauraitem = killaura.addoption("LimitToSword", Boolean, false);
-			new Module("FastBreak", function() {});
+			new Module("Breakfast", function() {});
 			function getMoveDirection(moveSpeed) {
 				let moveStrafe = player$1.moveStrafeDump;
 				let moveForward = player$1.moveForwardDump;
