@@ -112,7 +112,7 @@ function modifyCode(text) {
 		});
 	`);
 
-	addReplacement('VERSION$1," | ",', `"Yummi's Miniblox Mod Menu Beta 8"," | ",`);
+	addReplacement('VERSION$1," | ",', `"Yummi's Magic Menu Beta 8"," | ",`);
 	addReplacement('if(!nt.canConnect){', 'nt.errorMessage = nt.errorMessage == "Could not join server. You are connected to a VPN or proxy. Please disconnect from it and refresh the page." ? "You got ip banned :(, but don't worry. Just change your computer ip address." : nt.errorMessage;');
 
 	// DRAWING SETUP
