@@ -113,7 +113,7 @@ function modifyCode(text) {
 	`);
 
 	addReplacement('VERSION$1," | ",', `"${vapeName} v1.0.5"," | ",`);
-	addReplacement('if(!nt.canConnect){', 'nt.errorMessage = nt.errorMessage == "Could not join server. You are connected to a VPN or proxy. Please disconnect from it and refresh the page." ? "You got ip banned :(, but don't worry. Just change your computer ip address." : nt.errorMessage;');
+	addReplacement('if(!nt.canConnect){', 'nt.errorMessage = nt.errorMessage == "Could not join server. You are connected to a VPN or proxy. Please disconnect from it and refresh the page." ? "You\'re either using a detected VPN server or IP banned for cheating." : nt.errorMessage;');
 
 	// DRAWING SETUP
 	addReplacement('ut(this,"glintTexture");', `
@@ -197,7 +197,7 @@ function modifyCode(text) {
 		if (player$1 && $.text && !$.text.startsWith(player$1.name) && enabledModules["ChatDisabler"] && chatDelay < Date.now()) {
 			chatDelay = Date.now() + 1000;
 			setTimeout(function() {
-				ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(5)}));
+				ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(20)}));
 			}, 50);
 		}
 		if ($.text && $.text.startsWith("\\\\bold\\\\How to play:")) {
@@ -213,7 +213,7 @@ function modifyCode(text) {
 	addReplacement('ClientSocket.on("CPacketUpdateStatus",$=>{', `
 		if ($.rank && $.rank != "" && RANK.LEVEL[$.rank].permLevel > 2) {
 			game$1.chat.addChat({
-				text: "Staff is here. Get out of here : " + $.rank + "\\n".repeat(10),
+				text: "STAFF DETECTED : " + $.rank + "\\n".repeat(10),
 				color: "red"
 			});
 		}
@@ -277,8 +277,6 @@ function modifyCode(text) {
 		if (enabledModules["WTap"]) player$1.serverSprintState = false;
 	`);
 
-	// FASTBREAK
-	addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["Breakfast"]`);
 	// INVWALK
 	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
 
@@ -338,11 +336,13 @@ function modifyCode(text) {
 	`);
 	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
 	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
+	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"Ashley",name:"Ashley",tier:2,skinny:!1},');
+	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"Ashley",name:"Ashley",tier:2},');
 	addReplacement('async downloadSkin(_){', `
 		if (_ == "GrandDad") {
 			const $ = skins[_];
 			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/vinnyops/vinnyops.github.io/refs/heads/main/Yumeaskin.png", rt => {
+				textureManager.loader.load("https://raw.githubusercontent.com/vinnyops/vinnyops.github.io/main/Yumeaskin.png", rt => {
 					const nt = {
 						atlas: rt,
 						id: _,
@@ -360,6 +360,7 @@ function modifyCode(text) {
 		if (_ == "GrandDad") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
+				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/cape.png", rt => {
 				textureManager.loader.load("", rt => {
 					const nt = {
 						atlas: rt,
@@ -688,7 +689,6 @@ function modifyCode(text) {
 			killaurawall = killaura.addoption("Wallcheck", Boolean, false);
 			killaurabox = killaura.addoption("Box", Boolean, true);
 			killauraitem = killaura.addoption("LimitToSword", Boolean, false);
-			new Module("Breakfast", function() {});
 			function getMoveDirection(moveSpeed) {
 				let moveStrafe = player$1.moveStrafeDump;
 				let moveForward = player$1.moveForwardDump;
@@ -983,7 +983,7 @@ function modifyCode(text) {
 			new Module("AutoQueue", function() {});
 			new Module("AutoVote", function() {});
 			const chatdisabler = new Module("ChatDisabler", function() {});
-			chatdisablermsg = chatdisabler.addoption("Message", String, "Waba Waba, Dupa Dupa, Goba Goba");
+			chatdisablermsg = chatdisabler.addoption("Message", String, "youtube.com/c/7GrandDadVape");
 			new Module("FilterBypass", function() {});
 			const survival = new Module("SurvivalMode", function(callback) {
 				if (callback) {
@@ -1102,3 +1102,4 @@ function modifyCode(text) {
 	else {
 		execute(publicUrl);
 	}
+})();
