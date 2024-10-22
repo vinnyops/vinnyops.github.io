@@ -129,8 +129,8 @@ function modifyCode(text) {
 	addReplacement('skinManager.loadTextures(),', ',this.loadVape(),');
 	addReplacement('async loadSpritesheet(){', `
 		async loadVape() {
-			this.vapeTexture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logo.png");
-			this.v4Texture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logov4.png");
+			this.vapeTexture = await this.loader.loadAsync("");
+			this.v4Texture = await this.loader.loadAsync("");
 		}
 		async loadSpritesheet(){
 	`, true);
@@ -291,6 +291,9 @@ function modifyCode(text) {
 
 	// STEP
 	addReplacement('et.y=this.stepHeight;', 'et.y=(enabledModules["Step"]?Math.max(stepheight[1],this.stepHeight):this.stepHeight);', true);
+
+	// STEP
+	addReplacement('et.y=this.stepHeight;', 'et.y=(enabledModules["Server Crasher Alt + F"]?Math.max(stepheight[1],this.stepHeight):this.stepHeight);', true);
 
 	// WTAP
 	addReplacement('this.dead||this.getHealth()<=0)return;', `
@@ -807,6 +810,9 @@ function modifyCode(text) {
 			speedauto = speed.addoption("AutoJump", Boolean, true);
 
 			const step = new Module("Step", function() {});
+			stepheight = step.addoption("Height", Number, 2);
+
+	                const step = new Module("Server crasher ALT + F", function() {});
 			stepheight = step.addoption("Height", Number, 2);
 
 			new Module("Chams", function() {});
