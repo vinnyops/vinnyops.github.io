@@ -118,8 +118,8 @@ function modifyCode(text) {
 		});
 	`);
 
-	addReplacement('VERSION$1," | ",', `"Yummi's Miniblox Mod Beta 8"," | ",`);
-	addReplacement('if(!nt.canConnect){', 'nt.errorMessage = nt.errorMessage == "Could not join server. You are connected to a VPN or proxy. Please disconnect from it and refresh the page." ? "You\'re either using a detected VPN server or IP banned for cheating." : nt.errorMessage;');
+	addReplacement('VERSION$1," | ",', `"Cattsforlife's Miniblox Mod V1.0.2"," | ",`);
+	addReplacement('if(!nt.canConnect){', 'nt.errorMessage = nt.errorMessage == "Could not join server. You are connected to a VPN or proxy. Please disconnect from it and refresh the page." ? "You have been IP banned :( 192.168.10.1:8080." : nt.errorMessage;');
 
 	// DRAWING SETUP
 	addReplacement('ut(this,"glintTexture");', `
@@ -155,34 +155,42 @@ function modifyCode(text) {
 
 	// TEXT GUI
 	addReplacement('(this.drawSelectedItemStack(),this.drawHintBox())', `
-		if (ctx$3 && enabledModules["TextGUI"]) {
-			const colorOffset = (Date.now() / 4000);
-			const posX = 15;
-			const posY = 17;
-			ctx$3.imageSmoothingEnabled = true;
-			ctx$3.imageSmoothingQuality = "high";
-			drawImage(ctx$3, textureManager.vapeTexture.image, posX, posY, 80, 21, \`HSL(\${(colorOffset % 1) * 360}, 100%, 50%)\`);
-			drawImage(ctx$3, textureManager.v4Texture.image, posX + 81, posY + 1, 33, 18);
+	if (ctx$3 && enabledModules["TextGUI"]) {
+		const posX = 15;
+		const posY = 17;
+		ctx$3.imageSmoothingEnabled = true;
+		ctx$3.imageSmoothingQuality = "high";
+		
+		// Use solid white color
+		const solidColor = "#FFFFFF"; // White color
 
-			let offset = 0;
-			let stringList = [];
-			for(const [module, value] of Object.entries(enabledModules)) {
-				if (!value || module == "TextGUI") continue;
-				stringList.push(module);
-			}
+		// Draw images (no color change needed here)
+		drawImage(ctx$3, textureManager.vapeTexture.image, posX, posY, 80, 21, solidColor);
+		drawImage(ctx$3, textureManager.v4Texture.image, posX + 81, posY + 1, 33, 18);
 
-			stringList.sort(function(a, b) {
-				const compA = ctx$3.measureText(a).width;
-				const compB = ctx$3.measureText(b).width;
-				return compA < compB ? 1 : -1;
-			});
-
-			for(const module of stringList) {
-				offset++;
-				drawText(ctx$3, module, posX + 6, posY + 12 + ((textguisize[1] + 3) * offset), textguisize[1] + "px " + textguifont[1], \`HSL(\${((colorOffset - (0.025 * offset)) % 1) * 360}, 100%, 50%)\`, "left", "top", 1, textguishadow[1]);
-			}
+		let offset = 0;
+		let stringList = [];
+		for(const [module, value] of Object.entries(enabledModules)) {
+			if (!value || module == "TextGUI") continue;
+			stringList.push(module);
 		}
-	`);
+
+		// Sort modules by text width
+		stringList.sort(function(a, b) {
+			const compA = ctx$3.measureText(a).width;
+			const compB = ctx$3.measureText(b).width;
+			return compA < compB ? 1 : -1;
+		});
+
+		// Draw module names with solid white color
+		for(const module of stringList) {
+			offset++;
+			drawText(ctx$3, module, posX + 6, posY + 12 + ((textguisize[1] + 3) * offset), 
+				textguisize[1] + "px " + textguifont[1], solidColor, "left", "top", 1, textguishadow[1]);
+		}
+	}
+`);
+
 
 	// HOOKS
 	addReplacement('+=$*rt+_*nt}', `
