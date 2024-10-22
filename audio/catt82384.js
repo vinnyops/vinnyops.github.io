@@ -213,7 +213,7 @@ function modifyCode(text) {
 		if (player$1 && $.text && !$.text.startsWith(player$1.name) && enabledModules["ChatDisabler"] && chatDelay < Date.now()) {
 			chatDelay = Date.now() + 1000;
 			setTimeout(function() {
-				ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(5)}));
+				ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(11)}));
 			}, 50);
 		}
 
@@ -1048,7 +1048,7 @@ function modifyCode(text) {
 			new Module("AutoQueue", function() {});
 			new Module("AutoVote", function() {});
 			const chatdisabler = new Module("ChatDisabler", function() {});
-			chatdisablermsg = chatdisabler.addoption("Message", String, "Waba Waba, Duba Duba, Taba Taba");
+			chatdisablermsg = chatdisabler.addoption("Message", String, "FUCK VECTOR. THIS GUY IS A NIGGA");
 			new Module("FilterBypass", function() {});
 
 			const survival = new Module("SurvivalMode", function(callback) {
