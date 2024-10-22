@@ -89,26 +89,20 @@ function modifyCode(text) {
 		let sendYaw = false;
 		let breakStart = Date.now();
 		let noMove = Date.now();
-
 		let enabledModules = {};
 		let modules = {};
-
 		let keybindCallbacks = {};
 		let keybindList = {};
-
 		let tickLoop = {};
 		let renderTickLoop = {};
-
 		let lastJoined, velocityhori, velocityvert, chatdisablermsg, textguifont, textguisize, textguishadow, attackedEntity, stepheight;
 		let attackTime = Date.now();
 		let chatDelay = Date.now();
-
 		function getModule(str) {
 			for(const [name, module] of Object.entries(modules)) {
 				if (name.toLocaleLowerCase() == str.toLocaleLowerCase()) return module;
 			}
 		}
-
 		let j;
 		for (j = 0; j < 26; j++) keybindList[j + 65] = keybindList["Key" + String.fromCharCode(j + 65)] = String.fromCharCode(j + 97);
 		for (j = 0; j < 10; j++) keybindList[48 + j] = keybindList["Digit" + j] = "" + j;
@@ -129,6 +123,8 @@ function modifyCode(text) {
 	addReplacement('skinManager.loadTextures(),', ',this.loadVape(),');
 	addReplacement('async loadSpritesheet(){', `
 		async loadVape() {
+			this.vapeTexture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logo.png");
+			this.v4Texture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logov4.png");
 			this.vapeTexture = await this.loader.loadAsync("");
 			this.v4Texture = await this.loader.loadAsync("");
 		}
@@ -163,25 +159,21 @@ function modifyCode(text) {
 		
 		// Use solid white color
 		const solidColor = "#FFFFFF"; // White color
-
 		// Draw images (no color change needed here)
 		drawImage(ctx$3, textureManager.vapeTexture.image, posX, posY, 80, 21, solidColor);
 		drawImage(ctx$3, textureManager.v4Texture.image, posX + 81, posY + 1, 33, 18);
-
 		let offset = 0;
 		let stringList = [];
 		for(const [module, value] of Object.entries(enabledModules)) {
 			if (!value || module == "TextGUI") continue;
 			stringList.push(module);
 		}
-
 		// Sort modules by text width
 		stringList.sort(function(a, b) {
 			const compA = ctx$3.measureText(a).width;
 			const compB = ctx$3.measureText(b).width;
 			return compA < compB ? 1 : -1;
 		});
-
 		// Draw module names with solid white color
 		for(const module of stringList) {
 			offset++;
@@ -217,15 +209,12 @@ function modifyCode(text) {
 				ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(5)}));
 			}, 50);
 		}
-
 		if ($.text && $.text.startsWith("\\\\bold\\\\How to play:")) {
 			breakStart = Date.now() + 25000;
 		}
-
 		if ($.text && $.text.indexOf("Poll started") != -1 && $.id == undefined && enabledModules["AutoVote"]) {
 			ClientSocket.sendPacket(new SPacketMessage({text: "/vote 2"}));
 		}
-
 		if ($.text && $.text.indexOf("won the game") != -1 && $.id == undefined && enabledModules["AutoQueue"]) {
 			game$1.requestQueue();
 		}
@@ -294,7 +283,6 @@ function modifyCode(text) {
 
 	// STEP
 	addReplacement('et.y=this.stepHeight;', 'et.y=(enabledModules["Server Crasher Alt + F"]?Math.max(stepheight[1],this.stepHeight):this.stepHeight);', true);
-
 	// WTAP
 	addReplacement('this.dead||this.getHealth()<=0)return;', `
 		if (enabledModules["WTap"]) player$1.serverSprintState = false;
@@ -329,17 +317,14 @@ function modifyCode(text) {
 				et.mesh.meshes[mesh].material.depthTest = false;
 				et.mesh.meshes[mesh].renderOrder = 3;
 			}
-
 			for(const mesh in et.mesh.armorMesh) {
 				et.mesh.armorMesh[mesh].material.depthTest = false;
 				et.mesh.armorMesh[mesh].renderOrder = 4;
 			}
-
 			if (et.mesh.capeMesh) {
 				et.mesh.capeMesh.children[0].material.depthTest = false;
 				et.mesh.capeMesh.children[0].renderOrder = 5;
 			}
-
 			if (et.mesh.hatMesh) {
 				for(const mesh of et.mesh.hatMesh.children[0].children) {
 					if (!mesh.material) continue;
@@ -456,7 +441,6 @@ function modifyCode(text) {
 						game$1.chat.addChat({text: chatString});
 						return;
 					}
-
 					let option;
 					for(const [name, value] of Object.entries(module.options)) {
 						if (name.toLocaleLowerCase() == args[2].toLocaleLowerCase()) option = value;
@@ -541,7 +525,6 @@ function modifyCode(text) {
 					return this.options[name];
 				}
 			}
-
 			let clickDelay = Date.now();
 			new Module("AutoClicker", function(callback) {
 				if (callback) {
@@ -553,15 +536,12 @@ function modifyCode(text) {
 					}
 				} else delete tickLoop["AutoClicker"];
 			});
-
 			new Module("Sprint", function() {});
 			const velocity = new Module("Velocity", function() {});
 			velocityhori = velocity.addoption("Horizontal", Number, 0);
 			velocityvert = velocity.addoption("Vertical", Number, 0);
-
 			// WTap
 			new Module("WTap", function() {});
-
 			// AntiVoid
 			new Module("AntiFall", function(callback) {
 				if (callback) {
@@ -575,7 +555,6 @@ function modifyCode(text) {
 				}
 				else delete tickLoop["AntiFall"];
 			});
-
 			// Killaura
 			let attackDelay = Date.now();
 			let didSwing = false;
@@ -584,14 +563,12 @@ function modifyCode(text) {
 			let attackList = [];
 			let boxMeshes = [];
 			let killaurarange, killaurablock, killaurabox, killauraangle, killaurawall, killauraitem;
-
 			function wrapAngleTo180_radians(j) {
 				return j = j % (2 * Math.PI),
 				j >= Math.PI && (j -= 2 * Math.PI),
 				j < -Math.PI && (j += 2 * Math.PI),
 				j
 			}
-
 			function killauraAttack(entity, first) {
 				if (attackDelay < Date.now()) {
 					const aimPos = player$1.pos.clone().sub(entity.pos);
@@ -622,12 +599,10 @@ function modifyCode(text) {
 					}
 				}
 			}
-
 			function swordCheck() {
 				const item = player$1.inventory.getCurrentItem();
 				return item && item.getItem() instanceof ItemSword;
 			}
-
 			function block() {
 				if (attackDelay < Date.now()) attackDelay = Date.now() + (Math.round(attacked / 2) * 100);
 				if (swordCheck() && killaurablock[1]) {
@@ -638,7 +613,6 @@ function modifyCode(text) {
 					}
 				} else blocking = false;
 			}
-
 			function unblock() {
 				if (blocking && swordCheck()) {
 					playerControllerMP.syncItemDump();
@@ -650,13 +624,11 @@ function modifyCode(text) {
 				}
 				blocking = false;
 			}
-
 			function getTeam(entity) {
 				const entry = game$1.playerList.playerDataMap.get(entity.id);
 				if (!entry) return;
 				return entry.color != "white" ? entry.color : undefined;
 			}
-
 			const killaura = new Module("Killaura", function(callback) {
 				if (callback) {
 					for(let i = 0; i < 10; i++) {
@@ -675,7 +647,6 @@ function modifyCode(text) {
 						const localPos = controls.position.clone();
 						const localTeam = getTeam(player$1);
 						const entities = game$1.world.entitiesDump;
-
 						attackList = [];
 						if (!killauraitem[1] || swordCheck()) {
 							for (const entity of entities.values()) {
@@ -689,20 +660,16 @@ function modifyCode(text) {
 								}
 							}
 						}
-
 						attackList.sort((a, b) => {
 							return (attackedPlayers[a.id] || 0) > (attackedPlayers[b.id] || 0) ? 1 : -1;
 						});
-
 						for(const entity of attackList) killauraAttack(entity, attackList[0] == entity);
-
 						if (attackList.length > 0) block();
 						else {
 							unblock();
 							sendYaw = false;
 						}
 					};
-
 					renderTickLoop["Killaura"] = function() {
 						for(let i = 0; i < boxMeshes.length; i++) {
 							const entity = attackList[i];
@@ -730,7 +697,6 @@ function modifyCode(text) {
 			killaurawall = killaura.addoption("Wallcheck", Boolean, false);
 			killaurabox = killaura.addoption("Box", Boolean, true);
 			killauraitem = killaura.addoption("LimitToSword", Boolean, false);
-
 			function getMoveDirection(moveSpeed) {
 				let moveStrafe = player$1.moveStrafeDump;
 				let moveForward = player$1.moveForwardDump;
@@ -743,7 +709,6 @@ function modifyCode(text) {
 				}
 				return new Vector3$1(0, 0, 0);
 			}
-
 			// Fly
 			let flyvalue, flyvert, flybypass;
 			const fly = new Module("Fly", function(callback) {
@@ -768,11 +733,9 @@ function modifyCode(text) {
 			flybypass = fly.addoption("Bypass", Boolean, true);
 			flyvalue = fly.addoption("Speed", Number, 2);
 			flyvert = fly.addoption("Vertical", Number, 0.7);
-
 			new Module("InvWalk", function() {});
 			new Module("KeepSprint", function() {});
 			new Module("NoSlowdown", function() {});
-
 			// NoFall
 			new Module("NoFall", function(callback) {
 				if (callback) {
@@ -787,7 +750,6 @@ function modifyCode(text) {
 				}
 				else delete tickLoop["NoFall"];
 			});
-
 			// Speed
 			let speedvalue, speedjump, speedauto;
 			const speed = new Module("Speed", function(callback) {
@@ -808,13 +770,10 @@ function modifyCode(text) {
 			speedvalue = speed.addoption("Speed", Number, 0.9);
 			speedjump = speed.addoption("JumpHeight", Number, 0.42);
 			speedauto = speed.addoption("AutoJump", Boolean, true);
-
 			const step = new Module("Step", function() {});
 			stepheight = step.addoption("Height", Number, 2);
-
 	                const step = new Module("Server crasher ALT + F", function() {});
 			stepheight = step.addoption("Height", Number, 2);
-
 			new Module("Chams", function() {});
 			const textgui = new Module("TextGUI", function() {});
 			textguifont = textgui.addoption("Font", String, "Arial");
@@ -822,7 +781,6 @@ function modifyCode(text) {
 			textguishadow = textgui.addoption("Shadow", Boolean, true);
 			textgui.toggle();
 			new Module("AutoRespawn", function() {});
-
 			// Breaker
 			let breakerrange;
 			const breaker = new Module("Breaker", function(callback) {
@@ -845,21 +803,17 @@ function modifyCode(text) {
 				else delete tickLoop["Breaker"];
 			});
 			breakerrange = breaker.addoption("Range", Number, 10);
-
 			function getItemStrength(stack) {
 				if (stack == null) return 0;
 				const itemBase = stack.getItem();
 				let base = 1;
-
 				if (itemBase instanceof ItemSword) base += itemBase.attackDamage;
 				else if (itemBase instanceof ItemArmor) base += itemBase.damageReduceAmountDump;
-
 				const nbttaglist = stack.getEnchantmentTagList();
 				if (nbttaglist != null) {
 					for (let i = 0; i < nbttaglist.length; ++i) {
 						const id = nbttaglist[i].id;
 						const lvl = nbttaglist[i].lvl;
-
 						if (id == Enchantments.sharpness.effectId) base += lvl * 1.25;
 						else if (id == Enchantments.protection.effectId) base += Math.floor(((6 + lvl * lvl) / 3) * 0.75);
 						else if (id == Enchantments.efficiency.effectId) base += (lvl * lvl + 1);
@@ -867,10 +821,8 @@ function modifyCode(text) {
 						else base += lvl * 0.01;
 					}
 				}
-
 				return base * stack.stackSize;
 			}
-
 			// AutoArmor
 			function getArmorSlot(armorSlot, slots) {
 				let returned = armorSlot;
@@ -887,7 +839,6 @@ function modifyCode(text) {
 				}
 				return returned;
 			}
-
 			new Module("AutoArmor", function(callback) {
 				if (callback) {
 					tickLoop["AutoArmor"] = function() {
@@ -908,7 +859,6 @@ function modifyCode(text) {
 				}
 				else delete tickLoop["AutoArmor"];
 			});
-
 			function craftRecipe(recipe) {
 				if (canCraftItem(player$1.inventory, recipe)) {
 					craftItem(player$1.inventory, recipe, false);
@@ -921,7 +871,6 @@ function modifyCode(text) {
 					playerControllerDump.windowClickDump(player$1.openContainer.windowId, 36, 0, 0, player$1);
 				}
 			}
-
 			let checkDelay = Date.now();
 			new Module("AutoCraft", function(callback) {
 				if (callback) {
@@ -934,7 +883,6 @@ function modifyCode(text) {
 				}
 				else delete tickLoop["AutoCraft"];
 			});
-
 			let cheststealblocks, cheststealtools;
 			const cheststeal = new Module("ChestSteal", function(callback) {
 				if (callback) {
@@ -954,20 +902,16 @@ function modifyCode(text) {
 			});
 			cheststealblocks = cheststeal.addoption("Blocks", Boolean, true);
 			cheststealtools = cheststeal.addoption("Tools", Boolean, false);
-
-
 			function getPossibleSides(pos) {
 				for(const side of EnumFacing.VALUES) {
 					const state = game$1.world.getBlockState(pos.add(side.toVector().x, side.toVector().y, side.toVector().z));
 					if (state.getBlock().material != Materials.air) return side.getOpposite();
 				}
 			}
-
 			function switchSlot(slot) {
 				player$1.inventory.currentItem = slot;
 				game$1.info.selectedSlot = slot;
 			}
-
 			let scaffoldtower, oldHeld;
 			const scaffold = new Module("Scaffold", function(callback) {
 				if (callback) {
@@ -980,7 +924,6 @@ function modifyCode(text) {
 								break;
 							}
 						}
-
 						const item = player$1.inventory.getCurrentItem();
 						if (item && item.getItem() instanceof ItemBlock) {
 							let placeSide;
@@ -1004,14 +947,12 @@ function modifyCode(text) {
 											}
 										}
 									}
-
 									if (closestPos) {
 										pos = closestPos;
 										placeSide = closestSide;
 									}
 								}
 							}
-
 							if (placeSide) {
 								const dir = placeSide.getOpposite().toVector();
 								const newDir = placeSide.toVector();
@@ -1033,7 +974,6 @@ function modifyCode(text) {
 				}
 			});
 			scaffoldtower = scaffold.addoption("Tower", Boolean, true);
-
 			function reloadTickLoop(value) {
 				if (game$1.tickLoop) {
 					MSPT = value;
@@ -1041,14 +981,12 @@ function modifyCode(text) {
 					game$1.tickLoop = setInterval(() => game$1.fixedUpdate(), MSPT);
 				}
 			}
-
 			let timervalue;
 			const timer = new Module("Timer", function(callback) {
 				reloadTickLoop(callback ? 50 / timervalue[1] : 50);
 			});
 			timervalue = timer.addoption("Value", Number, 1.2);
 			new Module("Phase", function() {});
-
 			const antiban = new Module("AntiBan", function() {});
 			antiban.toggle();
 			new Module("AutoRejoin", function() {});
@@ -1057,14 +995,12 @@ function modifyCode(text) {
 			const chatdisabler = new Module("ChatDisabler", function() {});
 			chatdisablermsg = chatdisabler.addoption("Message", String, "Waba Waba, Duba Duba, Taba Taba");
 			new Module("FilterBypass", function() {});
-
 			const survival = new Module("SurvivalMode", function(callback) {
 				if (callback) {
 					if (player$1) player$1.setGamemode(GameMode.fromId("survival"));
 					survival.toggle();
 				}
 			});
-
 			globalThis.${storeName}.modules = modules;
 			globalThis.${storeName}.profile = "default";
 		})();
