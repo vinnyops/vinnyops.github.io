@@ -62,18 +62,18 @@ function modifyCode(text) {
 	'use strict';
 
 	// DUMPING
-	addDump('moveStrafeDump', 'strafe:this\.([a-zA-Z]*)');
-	addDump('moveForwardDump', 'forward:this\.([a-zA-Z]*)');
-	addDump('keyPressedDump', 'function ([a-zA-Z]*)\\(j\\)\{return keyPressed\\(j\\)');
-	addDump('entitiesDump', 'this\.([a-zA-Z]*)\.values\\(\\)\\)nt instanceof EntityTNTPrimed');
-	addDump('isInvisibleDump', 'ot\.([a-zA-Z]*)\\(\\)\\)&&\\(pt=new ([a-zA-Z]*)\\(new');
-	addDump('attackDump', 'hitVec.z\}\\)\}\\)\\),player\\$1\.([a-zA-Z]*)');
-	addDump('lastReportedYawDump', 'this\.([a-zA-Z]*)=this\.yaw,this\.last');
-	addDump('windowClickDump', '([a-zA-Z]*)\\(this\.inventorySlots\.windowId');
-	addDump('playerControllerDump', 'const ([a-zA-Z]*)=new PlayerController,');
-	addDump('damageReduceAmountDump', 'ItemArmor&&\\(tt\\+\\=it\.([a-zA-Z]*)');
-	addDump('boxGeometryDump', 'ot=new Mesh\\(new ([a-zA-Z]*)\\(1');
-	addDump('syncItemDump', 'playerControllerMP\.([a-zA-Z]*)\\(\\),ClientSocket\.sendPacket');
+	//addDump('moveStrafeDump', 'strafe:this\.([a-zA-Z]*)');
+	//addDump('moveForwardDump', 'forward:this\.([a-zA-Z]*)');
+	//addDump('keyPressedDump', 'function ([a-zA-Z]*)\\(j\\)\{return keyPressed\\(j\\)');
+	//addDump('entitiesDump', 'this\.([a-zA-Z]*)\.values\\(\\)\\)nt instanceof EntityTNTPrimed');
+	//addDump('isInvisibleDump', 'ot\.([a-zA-Z]*)\\(\\)\\)&&\\(pt=new ([a-zA-Z]*)\\(new');
+	//addDump('attackDump', 'hitVec.z\}\\)\}\\)\\),player\\$1\.([a-zA-Z]*)');
+	//addDump('lastReportedYawDump', 'this\.([a-zA-Z]*)=this\.yaw,this\.last');
+	//addDump('windowClickDump', '([a-zA-Z]*)\\(this\.inventorySlots\.windowId');
+	//addDump('playerControllerDump', 'const ([a-zA-Z]*)=new PlayerController,');
+	//addDump('damageReduceAmountDump', 'ItemArmor&&\\(tt\\+\\=it\.([a-zA-Z]*)');
+	//addDump('boxGeometryDump', 'ot=new Mesh\\(new ([a-zA-Z]*)\\(1');
+	//addDump('syncItemDump', 'playerControllerMP\.([a-zA-Z]*)\\(\\),ClientSocket\.sendPacket');
 
 	// PRE
 	addReplacement('document.addEventListener("DOMContentLoaded",startGame,!1);', `
@@ -136,9 +136,9 @@ function modifyCode(text) {
 	`, true);
 
 	// TELEPORT FIX
-	addReplacement('player$1.setPositionAndRotation($.x,$.y,$.z,$.yaw,$.pitch),', `
-		noMove = Date.now() + 500;
-		player$1.setPositionAndRotation($.x,$.y,$.z,$.yaw,$.pitch),
+	//addReplacement('player$1.setPositionAndRotation($.x,$.y,$.z,$.yaw,$.pitch),', `
+		//noMove = Date.now() + 500;
+		//player$1.setPositionAndRotation($.x,$.y,$.z,$.yaw,$.pitch),
 	`, true);
 
 	addReplacement('COLOR_TOOLTIP_BG,BORDER_SIZE)}', `
@@ -192,32 +192,32 @@ function modifyCode(text) {
 	`);
 
 	// HOOKS
-	addReplacement('+=$*rt+_*nt}', `
-		if (this == player$1) {
-			for(const [index, func] of Object.entries(tickLoop)) if (func) func();
+	//addReplacement('+=$*rt+_*nt}', `
+	//	if (this == player$1) {
+	//		for(const [index, func] of Object.entries(tickLoop)) if (func) func();
 		}
 	`);
-	addReplacement('this.game.unleash.isEnabled("disable-ads")', 'true', true);
-	addReplacement('$.render()})', '; for(const [index, func] of Object.entries(renderTickLoop)) if (func) func();');
-	addReplacement('updateNameTag(){let$="white",et = 1;', 'this.entity.team = this.entity.profile.cosmetics.color;');
-	addReplacement('connect(_,$=!1,et=!1){', 'lastJoined = _;');
-	addReplacement('SliderOption("Render Distance ",2,8,3)', 'SliderOption("Render Distance ",2,64,3)', true);
-	addReplacement('ClientSocket.on("CPacketDisconnect",$=>{', `
-		if (enabledModules["AutoRejoin"]) {
-			setTimeout(function() {
-				j.connect(lastJoined);
+	//addReplacement('this.game.unleash.isEnabled("disable-ads")', 'true', true);
+	//addReplacement('$.render()})', '; for(const [index, func] of Object.entries(renderTickLoop)) if (func) func();');
+	//addReplacement('updateNameTag(){let$="white",et = 1;', 'this.entity.team = this.entity.profile.cosmetics.color;');
+	//addReplacement('connect(_,$=!1,et=!1){', 'lastJoined = _;');
+	//addReplacement('SliderOption("Render Distance ",2,8,3)', 'SliderOption("Render Distance ",2,64,3)', true);
+	//addReplacement('ClientSocket.on("CPacketDisconnect",$=>{', `
+	//	if (enabledModules["AutoRejoin"]) {
+	//		setTimeout(function() {
+	//			j.connect(lastJoined);
 			}, 400);
 		}
 	`);
-	addReplacement('ClientSocket.on("CPacketMessage",$=>{', `
-		if (player$1 && $.text && !$.text.startsWith(player$1.name) && enabledModules["ChatDisabler"] && chatDelay < Date.now()) {
-			chatDelay = Date.now() + 1000;
-			setTimeout(function() {
-				ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(11)}));
-			}, 50);
+	//addReplacement('ClientSocket.on("CPacketMessage",$=>{', `
+	//	if (player$1 && $.text && !$.text.startsWith(player$1.name) && enabledModules["ChatDisabler"] && chatDelay < Date.now()) {
+	//		chatDelay = Date.now() + 1000;
+	//		setTimeout(function() {
+	//			ClientSocket.sendPacket(new SPacketMessage({text: Math.random() + ("\\n" + chatdisablermsg[1]).repeat(11)}));
+		//	}, 50);
 		}
 
-		if ($.text && $.text.startsWith("\\\\bold\\\\How to play:")) {
+	//	if ($.text && $.text.startsWith("\\\\bold\\\\How to play:")) {
 			\ = Date.now() + 25000;
 		}
 
@@ -239,111 +239,111 @@ function modifyCode(text) {
 	`);
 
 	// REBIND
-	addReplacement('bindKeysWithDefaults("b",j=>{', 'bindKeysWithDefaults("semicolon",j=>{', true);
-	addReplacement('bindKeysWithDefaults("i",j=>{', 'bindKeysWithDefaults("apostrophe",j=>{', true);
-
+	//addReplacement('bindKeysWithDefaults("b",j=>{', 'bindKeysWithDefaults("semicolon",j=>{', true);
+	//addReplacement('bindKeysWithDefaults("i",j=>{', 'bindKeysWithDefaults("apostrophe",j=>{', true);
+//
 	// SPRINT
-	addReplacement('at=keyPressedDump("shift")||touchcontrols.sprinting', '||enabledModules["Sprint"]');
+	//addReplacement('at=keyPressedDump("shift")||touchcontrols.sprinting', '||enabledModules["Sprint"]');
 
 	// VELOCITY
-	addReplacement('"CPacketEntityVelocity",$=>{const et=j.world.entitiesDump.get($.id);', `
-		if (player$1 && $.id == player$1.id && enabledModules["Velocity"]) {
-			if (velocityhori[1] == 0 && velocityvert[1] == 0) return;
-			$.motion = new Vector3$1($.motion.x * velocityhori[1], $.motion.y * velocityvert[1], $.motion.z * velocityhori[1]);
+	//addReplacement('"CPacketEntityVelocity",$=>{const et=j.world.entitiesDump.get($.id);', `
+		//if (player$1 && $.id == player$1.id && enabledModules["Velocity"]) {
+		//	if (velocityhori[1] == 0 && velocityvert[1] == 0) return;
+		//	$.motion = new Vector3$1($.motion.x * velocityhori[1], $.motion.y * velocityvert[1], $.motion.z * velocityhori[1]);
 		}
 	`);
 	addReplacement('"CPacketExplosion",$=>{', `
-		if ($.playerPos && enabledModules["Velocity"]) {
-			if (velocityhori[1] == 0 && velocityvert[1] == 0) return;
-			$.playerPos = new Vector3$1($.playerPos.x * velocityhori[1], $.playerPos.y * velocityvert[1], $.playerPos.z * velocityhori[1]);
+		//if ($.playerPos && enabledModules["Velocity"]) {
+			//if (velocityhori[1] == 0 && velocityvert[1] == 0) return;
+			//$.playerPos = new Vector3$1($.playerPos.x * velocityhori[1], $.playerPos.y * velocityvert[1], $.playerPos.z * velocityhori[1]);
 		}
 	`);
 
 	// KEEPSPRINT
-	addReplacement('tt>0&&($.addVelocity(-Math.sin(this.yaw)*tt*.5,.1,-Math.cos(this.yaw)*tt*.5),this.motion.x*=.6,this.motion.z*=.6,this.setSprinting(!1)),', `
-		if (tt > 0) {
-			$.addVelocity(-Math.sin(this.yaw) * tt * .5, .1, -Math.cos(this.yaw) * tt * .5);
-			if (this != player$1 || !enabledModules["KeepSprint"]) {
-				this.motion.x *= .6;
-				this.motion.z *= .6;
-				this.setSprinting(!1);
-			}
+	//addReplacement('tt>0&&($.addVelocity(-Math.sin(this.yaw)*tt*.5,.1,-Math.cos(this.yaw)*tt*.5),this.motion.x*=.6,this.motion.z*=.6,this.setSprinting(!1)),', `
+		//if (tt > 0) {
+			//$.addVelocity(-Math.sin(this.yaw) * tt * .5, .1, -Math.cos(this.yaw) * tt * .5);
+			//if (this != player$1 || !enabledModules["KeepSprint"]) {
+			//	this.motion.x *= .6;
+			//	this.motion.z *= .6;
+			//	this.setSprinting(!1);
+			}//
 		}
 	`, true);
 
 	// KILLAURA
-	addReplacement('else player$1.is//()?', 'else (player$1.is//() || //)?', true);
-	addReplacement('this.entity.is//()', '(this.entity.is//() || this.entity == player$1 && //)', true);
-	addReplacement('const nt={onGround:this.onGround}', `, realYaw = \ || this.yaw`);
-	addReplacement('this.yaw-this.', 'realYaw-this.', true);
-	addReplacement('nt.yaw=player.yaw', 'nt.yaw=realYaw', true);
-	addReplacement('this.lastReportedYawDump=this.yaw,', 'this.lastReportedYawDump=realYaw,', true);
-	addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(\||controls$1.yaw)', true);
+	//addReplacement('else player$1.is//()?', 'else (player$1.is//() || //)?', true);
+	//addReplacement('this.entity.is//()', '(this.entity.is//() || this.entity == player$1 && //)', true);
+	//addReplacement('const nt={onGround:this.onGround}', `, realYaw = \ || this.yaw`);
+	//addReplacement('this.yaw-this.', 'realYaw-this.', true);
+	//addReplacement('nt.yaw=player.yaw', 'nt.yaw=realYaw', true);
+	//addReplacement('this.lastReportedYawDump=this.yaw,', 'this.lastReportedYawDump=realYaw,', true);
+	//addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(\||controls$1.yaw)', true);
 
 	// NOSLOWDOWN
-	addReplacement('const $=this.jumping,et=this.sneak,tt=-.8,rt=this.moveForwardDump<=tt;', `
-		const slowdownCheck = this.isUsingItem() && !enabledModules["NoSlowdown"];
+	//addReplacement('const $=this.jumping,et=this.sneak,tt=-.8,rt=this.moveForwardDump<=tt;', `
+	//	const slowdownCheck = this.isUsingItem() && !enabledModules["NoSlowdown"];
 	`);
-	addReplacement('updatePlayerMoveState(),this.isUsingItem()', 'updatePlayerMoveState(),slowdownCheck', true);
-	addReplacement('it&&!this.isUsingItem()', 'it&&!slowdownCheck', true);
-	addReplacement('0),this.sneak', ' && !enabledModules["NoSlowdown"]');
+	//addReplacement('updatePlayerMoveState(),this.isUsingItem()', 'updatePlayerMoveState(),slowdownCheck', true);
+	//addReplacement('it&&!this.isUsingItem()', 'it&&!slowdownCheck', true);
+	//addReplacement('0),this.sneak', ' && !enabledModules["NoSlowdown"]');
 
 	// STEP
-	addReplacement('et.y=this.stepHeight;', 'et.y=(enabledModules["Step"]?Math.max(stepheight[1],this.stepHeight):this.stepHeight);', true);
+	//addReplacement('et.y=this.stepHeight;', 'et.y=(enabledModules["Step"]?Math.max(stepheight[1],this.stepHeight):this.stepHeight);', true);
 
 	// WTAP
-	addReplacement('this.dead||this.getHealth()<=0)return;', `
-		if (enabledModules["WTap"]) player$1.serverSprintState = false;
+	//addReplacement('this.dead||this.getHealth()<=0)return;', `
+	//	if (enabledModules["WTap"]) player$1.serverSprintState = false;
 	`);
 
 	// INVWALK
-	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
+	//addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
 
 	// TIMER
-	addReplacement('MSPT=50,', '', true);
-	addReplacement('MODE="production";', 'let MSPT = 50;');
-	addReplacement('ut(this,"controller");', 'ut(this, "tickLoop");');
-	addReplacement('setInterval(()=>this.fixedUpdate(),MSPT)', 'this.tickLoop=setInterval(()=>this.fixedUpdate(),MSPT)', true);
+	//addReplacement('MSPT=50,', '', true);
+	//addReplacement('MODE="production";', 'let MSPT = 50;');
+	//addReplacement('ut(this,"controller");', 'ut(this, "tickLoop");');
+	//addReplacement('setInterval(()=>this.fixedUpdate(),MSPT)', 'this.tickLoop=setInterval(()=>this.fixedUpdate(),MSPT)', true);
 
 	// PHASE
-	addReplacement('calculateXOffset(ft,this.getEntityBoundingBox(),tt.x)', 'enabledModules["Phase"] ? tt.x : calculateXOffset(ft,this.getEntityBoundingBox(),tt.x)', true);
-	addReplacement('calculateYOffset(ft,this.getEntityBoundingBox(),tt.y)', 'enabledModules["Phase"] && keyPressedDump("shift") ? tt.y : calculateYOffset(ft,this.getEntityBoundingBox(),tt.y)', true);
-	addReplacement('calculateZOffset(ft,this.getEntityBoundingBox(),tt.z)', 'enabledModules["Phase"] ? tt.z : calculateZOffset(ft,this.getEntityBoundingBox(),tt.z)', true);
-	addReplacement('pushOutOfBlocks(_,$,et){', 'if (enabledModules["Phase"]) return;');
+	//addReplacement('calculateXOffset(ft,this.getEntityBoundingBox(),tt.x)', 'enabledModules["Phase"] ? tt.x : calculateXOffset(ft,this.getEntityBoundingBox(),tt.x)', true);
+	//addReplacement('calculateYOffset(ft,this.getEntityBoundingBox(),tt.y)', 'enabledModules["Phase"] && keyPressedDump("shift") ? tt.y : calculateYOffset(ft,this.getEntityBoundingBox(),tt.y)', true);
+	//addReplacement('calculateZOffset(ft,this.getEntityBoundingBox(),tt.z)', 'enabledModules["Phase"] ? tt.z : calculateZOffset(ft,this.getEntityBoundingBox(),tt.z)', true);
+	//addReplacement('pushOutOfBlocks(_,$,et){', 'if (enabledModules["Phase"]) return;');
 
 	// AUTORESPAWN
-	addReplacement('this.game.info.showSignEditor=null,exitPointerLock())', `
-		if (this.showDeathScreen && enabledModules["AutoRespawn"]) {
-			ClientSocket.sendPacket(new SPacketRespawn$1);
+	//addReplacement('this.game.info.showSignEditor=null,exitPointerLock())', `
+		//if (this.showDeathScreen && enabledModules["AutoRespawn"]) {
+		//	ClientSocket.sendPacket(new SPacketRespawn$1);
 		}
 	`);
 
 	// CHAMS
-	addReplacement(')&&(et.mesh.visible=this.shouldRenderEntity(et))', `
-		if (enabledModules["Chams"] && et && et.id != player$1.id) {
-			for(const mesh in et.mesh.meshes) {
-				et.mesh.meshes[mesh].material.depthTest = false;
-				et.mesh.meshes[mesh].renderOrder = 3;
-			}
-
-			for(const mesh in et.mesh.armorMesh) {
-				et.mesh.armorMesh[mesh].material.depthTest = false;
-				et.mesh.armorMesh[mesh].renderOrder = 4;
-			}
-
-			if (et.mesh.capeMesh) {
-				et.mesh.capeMesh.children[0].material.depthTest = false;
-				et.mesh.capeMesh.children[0].renderOrder = 5;
-			}
-
-			if (et.mesh.hatMesh) {
-				for(const mesh of et.mesh.hatMesh.children[0].children) {
-					if (!mesh.material) continue;
-					mesh.material.depthTest = false;
-					mesh.renderOrder = 4;
-				}
-			}
-		}
+	//addReplacement(')&&(et.mesh.visible=this.shouldRenderEntity(et))', `
+	//	if (enabledModules["Chams"] && et && et.id != player$1.id) {
+		//	for(const mesh in et.mesh.meshes) {
+		//		et.mesh.meshes[mesh].material.depthTest = false;
+		//		et.mesh.meshes[mesh].renderOrder = 3;
+		//	}
+//
+//			for(const mesh in et.mesh.armorMesh) {
+//				et.mesh.armorMesh[mesh].material.depthTest = false;
+/				et.mesh.armorMesh[mesh].renderOrder = 4;
+/			}
+/
+/			if (et.mesh.capeMesh) {
+/				et.mesh.capeMesh.children[0].material.depthTest = false;
+/				et.mesh.capeMesh.children[0].renderOrder = 5;
+/			}
+/
+/			if (et.mesh.hatMesh) {
+/				for(const mesh of et.mesh.hatMesh.children[0].children) {
+/					if (!mesh.material) continue;
+/					mesh.material.depthTest = false;
+/					mesh.renderOrder = 4;
+/				}
+/			}
+/		}
 	`);
 
 	// SKIN
@@ -398,35 +398,35 @@ function modifyCode(text) {
 	`);
 
 	// LOGIN BYPASS
-	addReplacement('new SPacketLoginStart({requestedUuid:localStorage.getItem(REQUESTED_UUID_KEY)??void 0,session:localStorage.getItem(SESSION_TOKEN_KEY)??"",hydration:localStorage.getItem("hydration")??"0",metricsId:localStorage.getItem("metrics_id")??"",clientVersion:VERSION$1})', 'new SPacketLoginStart({requestedUuid:void 0,session:(enabledModules["AntiBan"] ? "" : (localStorage.getItem(SESSION_TOKEN_KEY) ?? "")),hydration:"0",metricsId:uuid$1(),clientVersion:VERSION$1})', true);
+	//addReplacement('new SPacketLoginStart({requestedUuid:localStorage.getItem(REQUESTED_UUID_KEY)??void 0,session:localStorage.getItem(SESSION_TOKEN_KEY)??"",hydration:localStorage.getItem("hydration")??"0",metricsId:localStorage.getItem("metrics_id")??"",clientVersion:VERSION$1})', 'new SPacketLoginStart({requestedUuid:void 0,session:(enabledModules["AntiBan"] ? "" : (localStorage.getItem(SESSION_TOKEN_KEY) ?? "")),hydration:"0",metricsId:uuid$1(),clientVersion:VERSION$1})', true);
 
 	// KEY FIX
-	addReplacement('Object.assign(keyMap,_)', '; keyMap["Semicolon"] = "semicolon"; keyMap["Apostrophe"] = "apostrophe";');
+	//addReplacement('Object.assign(keyMap,_)', '; keyMap["Semicolon"] = "semicolon"; keyMap["Apostrophe"] = "apostrophe";');
 
 	// SWING FIX
-	addReplacement('player$1.getActiveItemStack().item instanceof', 'null == ', true);
+	//addReplacement('player$1.getActiveItemStack().item instanceof', 'null == ', true);
 
 	// COMMANDS
-	addReplacement('tryExecuteClientside(et,_))return;', `
-		const str = $.toLocaleLowerCase();
-		const args = str.split(" ");
-		let chatString;
-		switch (args[0]) {
-			case ".bind": {
-				const module = args.length > 2 && \(args[1]);
-				if (module) module.setbind(args[2] == "none" ? "" : args[2], true);
-				return;
-			}
-			case ".t":
-			case ".toggle":
-				if (args.length > 1) {
-					const module = args.length > 1 && \(args[1]);
-					if (module) {
-						module.toggle();
-						game$1.chat.addChat({
-							text: module.name + (module.enabled ? " Enabled!" : " Disabled!"),
-							color: module.enabled ? "lime" : "red"
-						});
+//	addReplacement('tryExecuteClientside(et,_))return;', `
+//	//	const str = $.toLocaleLowerCase();
+/	//	const args = str.split(" ");
+/	//	let chatString;
+//	//	switch (args[0]) {
+/	/////		case ".bind": {
+			///	const module = args.length > 2 && \(args[1]);
+/	/		//	if (module) module.setbind(args[2] == "none" ? "" : args[2], true);
+/		//		return;
+/			}
+/		//	case ".t":
+/		/	case ".toggle":
+/		/		if (args.length > 1) {
+/		/			const module = args.length > 1 && \(args[1]);
+/					if (module) {
+/		/				module.toggle();
+/		/				game$1.chat.addChat({
+/		/					text: module.name + (module.enabled ? " Enabled!" : " Disabled!"),
+		/					color: module.enabled ? "lime" : "red"
+		/				});
 					}
 					else if (args[1] == "all") {
 						for(const [name, module] of Object.entries(modules)) module.toggle();
