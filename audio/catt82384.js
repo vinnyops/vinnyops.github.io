@@ -85,9 +85,9 @@ function modifyCode(text) {
 	`);
 
 	addReplacement('Potions.jump.getId(),"5");', `
-		let blocking = false;
-		let sendYaw = false;
-		let breakStart = Date.now();
+		let // = false;
+		let \ = false;
+		let \ = Date.now();
 		let noMove = Date.now();
 
 		let enabledModules = {};
@@ -103,7 +103,7 @@ function modifyCode(text) {
 		let attackTime = Date.now();
 		let chatDelay = Date.now();
 
-		function getModule(str) {
+		function \(str) {
 			for(const [name, module] of Object.entries(modules)) {
 				if (name.toLocaleLowerCase() == str.toLocaleLowerCase()) return module;
 			}
@@ -218,7 +218,7 @@ function modifyCode(text) {
 		}
 
 		if ($.text && $.text.startsWith("\\\\bold\\\\How to play:")) {
-			breakStart = Date.now() + 25000;
+			\ = Date.now() + 25000;
 		}
 
 		if ($.text && $.text.indexOf("Poll started") != -1 && $.id == undefined && enabledModules["AutoVote"]) {
@@ -272,13 +272,13 @@ function modifyCode(text) {
 	`, true);
 
 	// KILLAURA
-	addReplacement('else player$1.isBlocking()?', 'else (player$1.isBlocking() || blocking)?', true);
-	addReplacement('this.entity.isBlocking()', '(this.entity.isBlocking() || this.entity == player$1 && blocking)', true);
-	addReplacement('const nt={onGround:this.onGround}', `, realYaw = sendYaw || this.yaw`);
+	addReplacement('else player$1.is//()?', 'else (player$1.is//() || //)?', true);
+	addReplacement('this.entity.is//()', '(this.entity.is//() || this.entity == player$1 && //)', true);
+	addReplacement('const nt={onGround:this.onGround}', `, realYaw = \ || this.yaw`);
 	addReplacement('this.yaw-this.', 'realYaw-this.', true);
 	addReplacement('nt.yaw=player.yaw', 'nt.yaw=realYaw', true);
 	addReplacement('this.lastReportedYawDump=this.yaw,', 'this.lastReportedYawDump=realYaw,', true);
-	addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(sendYaw||controls$1.yaw)', true);
+	addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(\||controls$1.yaw)', true);
 
 	// NOSLOWDOWN
 	addReplacement('const $=this.jumping,et=this.sneak,tt=-.8,rt=this.moveForwardDump<=tt;', `
@@ -413,14 +413,14 @@ function modifyCode(text) {
 		let chatString;
 		switch (args[0]) {
 			case ".bind": {
-				const module = args.length > 2 && getModule(args[1]);
+				const module = args.length > 2 && \(args[1]);
 				if (module) module.setbind(args[2] == "none" ? "" : args[2], true);
 				return;
 			}
 			case ".t":
 			case ".toggle":
 				if (args.length > 1) {
-					const module = args.length > 1 && getModule(args[1]);
+					const module = args.length > 1 && \(args[1]);
 					if (module) {
 						module.toggle();
 						game$1.chat.addChat({
@@ -444,7 +444,7 @@ function modifyCode(text) {
 				game$1.chat.addChat({text: chatString});
 				return;
 			case ".setoption": {
-				const module = args.length > 1 && getModule(args[1]);
+				const module = args.length > 1 && \(args[1]);
 				if (module) {
 					if (args.length < 3) {
 						chatString = module.name + " Options";
@@ -593,7 +593,7 @@ function modifyCode(text) {
 					const aimPos = player$1.pos.clone().sub(entity.pos);
 					const newYaw = wrapAngleTo180_radians(Math.atan2(aimPos.x, aimPos.z) - player$1.lastReportedYawDump);
 					const checkYaw = wrapAngleTo180_radians(Math.atan2(aimPos.x, aimPos.z) - player$1.yaw);
-					if (first) sendYaw = Math.abs(checkYaw) > degToRad(30) && Math.abs(checkYaw) < degToRad(killauraangle[1]) ? player$1.lastReportedYawDump + newYaw : false;
+					if (first) \ = Math.abs(checkYaw) > degToRad(30) && Math.abs(checkYaw) < degToRad(killauraangle[1]) ? player$1.lastReportedYawDump + newYaw : false;
 					if (Math.abs(newYaw) < degToRad(30)) {
 						if ((attackedPlayers[entity.id] || 0) < Date.now()) attackedPlayers[entity.id] = Date.now() + 100;
 						if (!didSwing) {
@@ -627,16 +627,16 @@ function modifyCode(text) {
 			function block() {
 				if (attackDelay < Date.now()) attackDelay = Date.now() + (Math.round(attacked / 2) * 100);
 				if (swordCheck() && killaurablock[1]) {
-					if (!blocking) {
+					if (!//) {
 						playerControllerMP.syncItemDump();
 						ClientSocket.sendPacket(new SPacketUseItem);
-						blocking = true;
+						// = true;
 					}
-				} else blocking = false;
+				} else // = false;
 			}
 
 			function unblock() {
-				if (blocking && swordCheck()) {
+				if (// && swordCheck()) {
 					playerControllerMP.syncItemDump();
 					ClientSocket.sendPacket(new SPacketPlayerAction({
 						position: BlockPos.ORIGIN.toProto(),
@@ -644,7 +644,7 @@ function modifyCode(text) {
 						action: PBAction.RELEASE_USE_ITEM
 					}));
 				}
-				blocking = false;
+				// = false;
 			}
 
 			function getTeam(entity) {
@@ -695,7 +695,7 @@ function modifyCode(text) {
 						if (attackList.length > 0) block();
 						else {
 							unblock();
-							sendYaw = false;
+							\ = false;
 						}
 					};
 
@@ -716,7 +716,7 @@ function modifyCode(text) {
 					delete renderTickLoop["Killaura"];
 					for(const box of boxMeshes) box.visible = false;
 					boxMeshes.splice(boxMeshes.length);
-					sendYaw = false;
+					\ = false;
 					unblock();
 				}
 			});
@@ -822,7 +822,7 @@ function modifyCode(text) {
 				if (callback) {
 					let attemptDelay = {};
 					tickLoop["Breaker"] = function() {
-						if (breakStart > Date.now()) return;
+						if (\ > Date.now()) return;
 						let offset = breakerrange[1];
 						for (const block of BlockPos.getAllInBoxMutable(new BlockPos(player$1.pos.x - offset, player$1.pos.y - offset, player$1.pos.z - offset), new BlockPos(player$1.pos.x + offset, player$1.pos.y + offset, player$1.pos.z + offset))) {
 							if (game$1.world.getBlockState(block).getBlock() instanceof BlockDragonEgg) {
